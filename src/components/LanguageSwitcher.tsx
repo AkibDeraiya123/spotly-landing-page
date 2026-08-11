@@ -10,7 +10,7 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
 
   return (
     <div
-      className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white/80 p-1 text-sm backdrop-blur"
+      className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 p-1 text-sm backdrop-blur"
       role="group"
       aria-label="Language"
     >
@@ -23,8 +23,8 @@ export function LanguageSwitcher({ locale }: { locale: Locale }) {
             hrefLang={code}
             className={
               active
-                ? "rounded-full bg-navy px-3 py-1.5 font-medium text-white"
-                : "rounded-full px-3 py-1.5 text-gray-600 transition hover:text-navy"
+                ? "rounded-full bg-teal px-3 py-1.5 font-medium text-ink"
+                : "rounded-full px-3 py-1.5 text-mist transition hover:text-snow"
             }
           >
             {localeNames[code]}

@@ -21,9 +21,9 @@ const ibmArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "Spotly — Parking with Confidence",
+  title: "Spotly — Coming Soon",
   description:
-    "Know where you'll park before you leave. Guaranteed parking for drivers. More revenue for parking owners.",
+    "Know where you'll park before you arrive. Reserve before you leave. Skip the parking stress.",
 };
 
 export default function RootLayout({

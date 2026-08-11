@@ -3,18 +3,8 @@ import type { Metadata } from "next";
 import { getDirection, isLocale, locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/getDictionary";
 import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
-import { Future } from "@/components/sections/Future";
-import { Platform } from "@/components/sections/Platform";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { Drivers } from "@/components/sections/Drivers";
-import { Owners } from "@/components/sections/Owners";
-import { Dashboard } from "@/components/sections/Dashboard";
-import { Technology } from "@/components/sections/Technology";
-import { WhyChoose } from "@/components/sections/WhyChoose";
-import { Vision } from "@/components/sections/Vision";
-import { CTA } from "@/components/sections/CTA";
+import { ComingSoonHero } from "@/components/sections/ComingSoonHero";
+import { PartnerCTA } from "@/components/sections/PartnerCTA";
 import { Footer } from "@/components/sections/Footer";
 import { SetDocumentLocale } from "@/components/SetDocumentLocale";
 
@@ -53,22 +43,12 @@ export default async function LocalePage({
   const dir = getDirection(locale);
 
   return (
-    <div lang={locale} dir={dir}>
+    <div lang={locale} dir={dir} className="flex min-h-[100svh] flex-col">
       <SetDocumentLocale locale={locale} />
       <Navbar dict={dict} locale={locale} />
-      <main>
-        <Hero dict={dict} />
-        <Problem dict={dict} />
-        <Future dict={dict} />
-        <Platform dict={dict} />
-        <HowItWorks dict={dict} />
-        <Drivers dict={dict} />
-        <Owners dict={dict} />
-        <Dashboard dict={dict} />
-        <Technology dict={dict} />
-        <WhyChoose dict={dict} />
-        <Vision dict={dict} />
-        <CTA dict={dict} />
+      <main className="flex-1">
+        <ComingSoonHero dict={dict} />
+        <PartnerCTA dict={dict} />
       </main>
       <Footer dict={dict} />
     </div>
