@@ -58,7 +58,7 @@ const en: Dictionary = {
     cta: "Partner With Spotly",
   },
   footer: {
-    tagline: "Know where you'll park before you arrive.",
+    tagline: "Parking with confidence.",
     rights: "© 2026 Spotly. All rights reserved.",
   },
 };

@@ -11,7 +11,7 @@ export function PartnerCTA({ dict }: { dict: Dictionary }) {
           {dict.partner.body}
         </p>
         <a
-          href="mailto:partners@spotly.com?subject=Partner%20with%20Spotly"
+          href="mailto:akibderaiya123@gmail.com?subject=Partner%20with%20Spotly"
           className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full border border-white/20 px-7 text-sm font-semibold text-snow transition hover:border-teal hover:text-teal"
         >
           {dict.partner.cta}
