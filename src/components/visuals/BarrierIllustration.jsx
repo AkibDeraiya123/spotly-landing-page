@@ -102,7 +102,7 @@ export default function BarrierIllustration({ className = '', state = 'open' }) 
           letterSpacing="0.4"
           fontFamily="var(--font-sans), sans-serif"
         >
-          Built-in sensor
+          Built-in magnetic sensor
         </text>
       </g>
 
