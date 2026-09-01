@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Mirrors src/config/theme.js — see globals generated values below. */
+    --color-primary: theme('colors.primary.DEFAULT');
+    --color-primary-dark: theme('colors.primary.600');
+    --color-secondary: theme('colors.secondary.DEFAULT');
+    --color-accent: theme('colors.accent.DEFAULT');
+    --color-accent-dark: theme('colors.accent.600');
+    --color-ink: theme('colors.ink.DEFAULT');
+    --color-text: theme('colors.text');
+    --color-muted: theme('colors.muted');
+    --color-border: theme('colors.border');
+    --color-background: theme('colors.background');
+    --color-surface-muted: theme('colors.surfaceMuted');
+    --radius-card: theme('borderRadius.xl');
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header offset for in-page anchors. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-family: theme('fontFamily.display');
+    font-weight: theme('fontWeight.bold');
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, consistent focus for keyboard users on every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    /* The dark shade keeps selected text legible; the brand orange does not. */
+    background-color: var(--color-primary-dark);
+    color: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply container mx-auto;
+  }
+
+  .section-y {
+    @apply py-section lg:py-sectionLg;
+  }
+
+  .surface-card {
+    @apply rounded-xl border border-border bg-white;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]
+      focus:rounded-md focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-sm
+      focus:font-semibold focus:text-white;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Faint blueprint grid used behind diagrams and mockups. */
+  .bg-blueprint {
+    background-image: theme('backgroundImage.grid-faint');
+    background-size: theme('backgroundSize.grid');
+  }
+}

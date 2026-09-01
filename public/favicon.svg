@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Spotly">
+  <title>Spotly</title>
+  <circle cx="256" cy="256" r="256" fill="#EF5239"/>
+  <g fill="#FAF4EF">
+    <circle cx="173.66" cy="260.49" r="86.83"/>
+    <circle cx="338.34" cy="260.49" r="86.83"/>
+  </g>
+  <g fill="#EF5239">
+    <ellipse cx="173.66" cy="258.99" rx="52.4" ry="55.39"/>
+    <ellipse cx="338.34" cy="258.99" rx="52.4" ry="55.39"/>
+  </g>
+  <g fill="#FAF4EF">
+    <ellipse cx="200.61" cy="258.99" rx="11.98" ry="25.45"/>
+    <ellipse cx="365.29" cy="258.99" rx="11.98" ry="25.45"/>
+  </g>
+</svg>
