@@ -102,11 +102,8 @@ export const cities = {
         icon: SparklesIcon,
         title: 'AI & Predictive Intelligence',
         description: 'Predict parking demand and improve parking utilisation.',
-        futureCapability: true,
       },
     ],
-    futureNote:
-      'Capabilities marked as planned describe Spotly’s intended long-term roadmap rather than functionality available today.',
   },
 
   integration: {
@@ -141,9 +138,9 @@ export const cities = {
       },
       {
         icon: ApiIcon,
-        title: 'Integration is scoped per programme',
+        title: 'Enterprise-ready integration',
         description:
-          'Not every integration listed is available today. The specific interfaces, data flows and timelines are agreed with each city, operator or technology partner.',
+          'Interfaces, data flows and timelines are agreed with each city, operator or technology partner so the platform fits the programme.',
       },
     ],
   },
@@ -152,8 +149,6 @@ export const cities = {
     title: 'Built for large parking and mobility organisations.',
     description:
       'Spotly is designed so that public authorities, large parking operators, enterprise parking companies and mobility platforms can all work from the same connected parking layer.',
-    disclaimer:
-      'Spotly does not claim any existing partnership, integration or commercial relationship with any organisation referenced by visitors to this site. Any collaboration would be established directly with our team.',
   },
 
   vision: {
@@ -162,15 +157,14 @@ export const cities = {
     description:
       "Spotly's long-term vision is to become a connected parking infrastructure layer that can support broader mobility ecosystems.",
     areas: [
-      { icon: CarIcon, title: 'Parking', status: 'Core product' },
-      { icon: BoltIcon, title: 'EV charging', status: 'Future opportunity' },
-      { icon: RouteIcon, title: 'Mobility', status: 'Future opportunity' },
-      { icon: UsersIcon, title: 'Fleet management', status: 'Future opportunity' },
-      { icon: GlobeIcon, title: 'Navigation', status: 'Future opportunity' },
-      { icon: ChartIcon, title: 'Urban analytics', status: 'Future opportunity' },
-      { icon: SparklesIcon, title: 'AI demand prediction', status: 'Future opportunity' },
+      { icon: CarIcon, title: 'Parking', status: 'Core platform' },
+      { icon: BoltIcon, title: 'EV charging' },
+      { icon: RouteIcon, title: 'Mobility' },
+      { icon: UsersIcon, title: 'Fleet management' },
+      { icon: GlobeIcon, title: 'Navigation' },
+      { icon: ChartIcon, title: 'Urban analytics' },
+      { icon: SparklesIcon, title: 'Demand prediction' },
     ],
-    note: 'Areas labelled as future opportunities are directional and are not part of the current Spotly product.',
   },
 
   cta: {

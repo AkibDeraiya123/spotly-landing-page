@@ -28,7 +28,7 @@ export const home = {
     headline: 'Reserve. Drive. Park.',
     supportingHeadline: "Know where you'll park before you arrive.",
     copy: 'Reserve your parking before you leave, get your automatically assigned parking bay, and drive straight to your space.',
-    primaryCta: { label: 'Coming Soon', href: routes.contact },
+    primaryCta: { label: 'Get Started', href: routes.contact },
     secondaryCta: { label: 'How It Works', href: '#how-it-works' },
     highlights: [
       'Reserve before you leave',

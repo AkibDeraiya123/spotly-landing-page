@@ -85,7 +85,7 @@ export function OwnerDashboardMockup({ className = '' }) {
     <AppWindow
       className={className}
       title="app.spotly — Parking overview"
-      label="Example Spotly operator dashboard showing a parking overview with total, available, reserved and occupied bays, occupancy, revenue for the day, barrier device status and a parking location map. The figures shown are a design demonstration."
+      label="Spotly operator dashboard showing parking overview with total, available, reserved and occupied bays, occupancy, revenue and barrier status."
     >
       <div className="flex bg-secondary-100">
         <SideNav
@@ -190,7 +190,7 @@ export function LocationsDashboardMockup({ className = '' }) {
     <AppWindow
       className={className}
       title="app.spotly — Locations"
-      label="Example Spotly operator dashboard listing four parking locations with their total bays, available bays, occupancy and device status, next to a map of the locations. The figures shown are a design demonstration."
+      label="Spotly operator dashboard listing parking locations with bay counts, occupancy and device status."
     >
       <div className="bg-secondary-100 p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -276,7 +276,7 @@ export function CityDashboardMockup({ className = '' }) {
       className={className}
       tone="dark"
       title="app.spotly — City parking network"
-      label="Example Spotly city parking network dashboard showing total, available, occupied and reserved bays across connected parking locations, network occupancy, a city map with parking zones and demand analytics. The figures shown are a design demonstration."
+      label="Spotly city parking network dashboard showing bay availability, occupancy and demand across connected locations."
     >
       <div className="bg-ink-800 p-4 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2">

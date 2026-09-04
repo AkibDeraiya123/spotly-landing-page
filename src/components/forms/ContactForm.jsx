@@ -6,7 +6,6 @@ import { AlertIcon, CheckCircleIcon } from '@/components/icons';
 import { countries } from '@/config/countries';
 import { contact as contactContent } from '@/config/content/contact';
 import {
-  CONTACT_ENDPOINT,
   MESSAGE_MAX_LENGTH,
   initialValues,
   submitContactForm,
@@ -26,24 +25,46 @@ function Field({
   required,
   hint,
   className = '',
+  as = 'div',
   children,
 }) {
   const describedBy = [error ? `${id}-error` : null, hint ? `${id}-hint` : null]
     .filter(Boolean)
     .join(' ');
+  const isGroup = as === 'fieldset';
+  const Tag = isGroup ? 'fieldset' : 'div';
+  const labelClasses = 'mb-1.5 block text-sm font-semibold text-ink-900';
+  const requiredMark = required ? (
+    <span className="ml-1 text-primary-600" aria-hidden="true">
+      *
+    </span>
+  ) : (
+    <span className="ml-1.5 text-xs font-medium text-muted">(optional)</span>
+  );
 
   return (
-    <div className={className}>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-ink-900">
-        {label}
-        {required ? (
-          <span className="ml-1 text-primary-600" aria-hidden="true">
-            *
-          </span>
-        ) : (
-          <span className="ml-1.5 text-xs font-medium text-muted">(optional)</span>
-        )}
-      </label>
+    <Tag
+      className={className}
+      {...(isGroup
+        ? {
+            id,
+            'aria-required': required || undefined,
+            'aria-invalid': error ? true : undefined,
+            'aria-describedby': describedBy || undefined,
+          }
+        : {})}
+    >
+      {isGroup ? (
+        <legend className={labelClasses}>
+          {label}
+          {requiredMark}
+        </legend>
+      ) : (
+        <label htmlFor={id} className={labelClasses}>
+          {label}
+          {requiredMark}
+        </label>
+      )}
 
       {children({ describedBy: describedBy || undefined, invalid: Boolean(error) })}
 
@@ -62,7 +83,7 @@ function Field({
           {error}
         </p>
       ) : null}
-    </div>
+    </Tag>
   );
 }
 
@@ -84,16 +105,16 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
-  const [delivered, setDelivered] = useState(false);
 
   const fieldId = (name) => `${idPrefix}-${name}`;
   const interests = contactContent.interests;
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
     setValues((current) => ({ ...current, [name]: value }));
 
-    if (touched[name]) {
+    if (type === 'radio' || touched[name]) {
+      setTouched((current) => ({ ...current, [name]: true }));
       setErrors((current) => ({ ...current, [name]: validateField(name, value, { interests }) }));
     }
   };
@@ -121,10 +142,10 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
     }
 
     setStatus('submitting');
+    console.log('Contact form submission', { ...values });
 
     try {
-      const result = await submitContactForm(values);
-      setDelivered(result.delivered);
+      await submitContactForm(values);
       setStatus('success');
       setValues({ ...initialValues, interest: defaultInterest });
       setTouched({});
@@ -148,21 +169,9 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
         </span>
         <h3 className="mt-5 text-2xl font-bold text-ink-900">Thank you — your message is on its way.</h3>
         <p className="mt-3 max-w-prose text-[0.975rem] leading-relaxed text-ink-700">
-          {delivered
-            ? 'A member of the Spotly team will review your enquiry and get back to you at the email address you provided.'
-            : 'Your details have been captured. A member of the Spotly team will review your enquiry and get back to you.'}
+          A member of the Spotly team will review your enquiry and get back to you at the email
+          address you provided.
         </p>
-
-        {!delivered && !CONTACT_ENDPOINT ? (
-          <p className="mt-5 rounded-md border border-accent-200 bg-white px-4 py-3 text-xs leading-relaxed text-muted">
-            <strong className="font-semibold text-ink-900">Note for the site owner:</strong> no
-            submission endpoint is configured yet, so this message was not transmitted anywhere. Set{' '}
-            <code className="rounded bg-secondary-100 px-1 py-0.5 font-mono text-[0.6875rem]">
-              NEXT_PUBLIC_CONTACT_ENDPOINT
-            </code>{' '}
-            to start delivering submissions.
-          </p>
-        ) : null}
 
         <Button
           variant="outline"
@@ -350,31 +359,46 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
           label="I am interested in"
           required
           error={errors.interest}
+          as="fieldset"
           className="sm:col-span-2"
         >
-          {({ describedBy, invalid }) => (
-            <select
-              id={fieldId('interest')}
-              name="interest"
-              required
-              value={values.interest}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              aria-invalid={invalid}
-              aria-describedby={describedBy}
-              className={`${inputClasses(invalid)} appearance-none bg-[length:1.1rem] bg-[right_0.9rem_center] bg-no-repeat pr-10`}
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")",
-              }}
-            >
-              <option value="">Select an option</option>
-              {interests.map((interest) => (
-                <option key={interest} value={interest}>
-                  {interest}
-                </option>
-              ))}
-            </select>
+          {({ invalid }) => (
+            <div className="grid gap-2 sm:grid-cols-2">
+              {interests.map((interest) => {
+                const optionId = `${fieldId('interest')}-${interest
+                  .replace(/[^a-z0-9]+/gi, '-')
+                  .toLowerCase()
+                  .replace(/^-|-$/g, '')}`;
+                const selected = values.interest === interest;
+
+                return (
+                  <label
+                    key={interest}
+                    htmlFor={optionId}
+                    className={`flex cursor-pointer items-center gap-3 rounded-md border px-3.5 py-3 text-[0.9375rem] transition-colors duration-200 ${
+                      selected
+                        ? 'border-ink-900 bg-secondary-100 font-semibold text-ink-900'
+                        : invalid
+                          ? 'border-primary-500 bg-white text-ink-900'
+                          : 'border-ink-400 bg-white font-medium text-ink-800 hover:border-ink-600'
+                    }`}
+                  >
+                    <input
+                      id={optionId}
+                      type="radio"
+                      name="interest"
+                      value={interest}
+                      checked={selected}
+                      required
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="h-4 w-4 shrink-0 accent-primary-600"
+                    />
+                    {interest}
+                  </label>
+                );
+              })}
+            </div>
           )}
         </Field>
 
@@ -421,13 +445,6 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
           {status === 'submitting' ? 'Sending…' : 'Send Message'}
         </Button>
       </div>
-
-      {!CONTACT_ENDPOINT ? (
-        <p className="mt-4 text-xs leading-relaxed text-muted">
-          Submissions are validated in the browser. Connect a backend endpoint to start delivering
-          messages.
-        </p>
-      ) : null}
     </form>
   );
 }

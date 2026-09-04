@@ -18,21 +18,6 @@ export default function Badge({ children, tone = 'neutral', icon: IconComponent,
   );
 }
 
-/**
- * Marks a mockup as a design demonstration. Used everywhere a dashboard or app
- * screen shows sample numbers so nothing reads as a real customer statistic.
- */
-export function DemoBadge({ className = '', tone = 'neutral', children = 'Illustrative UI example' }) {
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.09em] ring-1 ${tones[tone]} ${className}`}
-    >
-      <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-current opacity-70" />
-      {children}
-    </span>
-  );
-}
-
 export function StatusDot({ tone = 'accent', label }) {
   const dot = {
     accent: 'bg-accent-500',

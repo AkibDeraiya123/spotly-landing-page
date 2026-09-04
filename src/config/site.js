@@ -34,11 +34,6 @@ export const site = {
 
   /* Social profiles: add real URLs only. Empty entries are never rendered. */
   social: [],
-
-  /* Pages that genuinely exist. Nothing else should be linked anywhere. */
-  status: {
-    appAvailability: 'coming-soon',
-  },
 };
 
 export default site;

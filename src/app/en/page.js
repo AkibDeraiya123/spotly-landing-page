@@ -3,7 +3,6 @@ import Button from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import SectionHeading, { Eyebrow } from '@/components/ui/SectionHeading';
 import Card, { FeatureCard, IconTile } from '@/components/ui/Card';
-import Badge, { DemoBadge } from '@/components/ui/Badge';
 import FlowDiagram, { VerticalFlow } from '@/components/ui/FlowDiagram';
 import CTASection from '@/components/sections/CTASection';
 import HeroVisual from '@/components/visuals/HeroVisual';
@@ -156,8 +155,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-8 rounded-xl border border-primary-200 bg-white p-6">
-              <Badge tone="primary">Important</Badge>
-              <h3 className="mt-4 text-xl font-bold text-ink-900">{home.intro.ruleTitle}</h3>
+              <h3 className="text-xl font-bold text-ink-900">{home.intro.ruleTitle}</h3>
               <p className="mt-2.5 max-w-prose leading-relaxed text-muted">{home.intro.ruleBody}</p>
             </div>
           </div>
@@ -401,9 +399,8 @@ export default function HomePage() {
             </ol>
           </div>
 
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex justify-center">
             <MobileAppMockup screen="wallet" className="w-[16.5rem] sm:w-[18rem]" />
-            <DemoBadge />
           </div>
         </div>
       </Section>

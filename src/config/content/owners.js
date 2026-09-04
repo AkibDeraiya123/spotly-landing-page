@@ -119,8 +119,6 @@ export const owners = {
       { title: 'More reservations', caption: 'Parking can be booked in advance.', icon: TicketIcon },
       { title: 'Revenue opportunity', caption: 'Informed pricing and planning decisions.', icon: CoinsIcon },
     ],
-    disclaimer:
-      'Outcomes depend on your location, demand and how the platform is configured. Spotly provides the visibility and tooling — not a guaranteed revenue result.',
   },
 
   useCases: {
@@ -147,9 +145,9 @@ export const owners = {
     ],
     note: {
       icon: ApiIcon,
-      title: 'Deployment is planned with you',
+      title: 'We deploy with your team',
       description:
-        'Scope, timelines and technical requirements are agreed with our team for each parking operation. Talk to us about what integration would look like for your facilities.',
+        'Our team maps your facilities, connects barriers and configures the platform so your locations go live on Spotly.',
     },
   },
 

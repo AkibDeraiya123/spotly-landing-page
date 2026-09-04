@@ -2,7 +2,6 @@ import Button from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import SectionHeading, { Eyebrow } from '@/components/ui/SectionHeading';
 import Card, { FeatureCard, IconTile } from '@/components/ui/Card';
-import { DemoBadge } from '@/components/ui/Badge';
 import FlowDiagram from '@/components/ui/FlowDiagram';
 import PageHero from '@/components/sections/PageHero';
 import CTASection from '@/components/sections/CTASection';
@@ -45,10 +44,7 @@ export default function ParkingOwnersPage() {
         secondaryCta={owners.hero.secondaryCta}
         bullets={owners.hero.bullets}
         visual={
-          <div className="flex flex-col gap-3">
-            <LocationsDashboardMockup />
-            <DemoBadge className="self-start" />
-          </div>
+          <LocationsDashboardMockup />
         }
       />
 
@@ -117,12 +113,8 @@ export default function ParkingOwnersPage() {
             </ul>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div>
             <OwnerDashboardMockup />
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted">
-              <DemoBadge />
-              Figures shown are a design demonstration, not Spotly customer data.
-            </p>
           </div>
         </div>
       </Section>
@@ -169,10 +161,6 @@ export default function ParkingOwnersPage() {
           steps={owners.businessValue.chain}
           columns={5}
         />
-
-        <p className="mx-auto mt-10 max-w-2xl rounded-lg border border-secondary-300 bg-white px-5 py-4 text-center text-sm leading-relaxed text-muted">
-          {owners.businessValue.disclaimer}
-        </p>
       </Section>
 
       {/* ---------------------------------------------------------------- */}

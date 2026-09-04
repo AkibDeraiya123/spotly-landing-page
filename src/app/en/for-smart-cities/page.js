@@ -2,7 +2,6 @@ import Button from '@/components/ui/Button';
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Card, { FeatureCard, IconTile } from '@/components/ui/Card';
-import Badge, { DemoBadge } from '@/components/ui/Badge';
 import PageHero from '@/components/sections/PageHero';
 import CTASection from '@/components/sections/CTASection';
 import { CityDashboardMockup } from '@/components/visuals/DashboardMockup';
@@ -112,11 +111,6 @@ export default function SmartCitiesPage() {
 
         <div className="mt-14">
           <CityDashboardMockup />
-          <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted">
-            <DemoBadge />
-            All figures shown are an illustrative design demonstration and do not represent live or
-            deployed Spotly data.
-          </p>
         </div>
 
         <dl className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -148,19 +142,9 @@ export default function SmartCitiesPage() {
               icon={capability.icon}
               title={capability.title}
               description={capability.description}
-              tone={capability.futureCapability ? 'neutral' : 'primary'}
-              footer={
-                capability.futureCapability ? (
-                  <Badge tone="warning">Planned long-term capability</Badge>
-                ) : null
-              }
             />
           ))}
         </div>
-
-        <p className="mx-auto mt-10 max-w-2xl rounded-lg border border-border bg-white px-5 py-4 text-center text-sm leading-relaxed text-muted">
-          {cities.capabilities.futureNote}
-        </p>
       </Section>
 
       {/* ---------------------------------------------------------------- */}
@@ -209,9 +193,6 @@ export default function SmartCitiesPage() {
           <p className="mt-5 text-lg leading-relaxed text-ink-700">
             {cities.ecosystemNote.description}
           </p>
-          <p className="mx-auto mt-8 max-w-2xl rounded-lg border border-secondary-300 bg-white px-5 py-4 text-sm leading-relaxed text-muted">
-            {cities.ecosystemNote.disclaimer}
-          </p>
         </div>
       </Section>
 
@@ -229,7 +210,7 @@ export default function SmartCitiesPage() {
 
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cities.vision.areas.map((area) => {
-            const isCore = area.status === 'Core product';
+            const isCore = area.status === 'Core platform';
 
             return (
               <li key={area.title}>
@@ -240,22 +221,20 @@ export default function SmartCitiesPage() {
                 >
                   <IconTile icon={area.icon} size="sm" tone={isCore ? 'accent' : 'neutral'} />
                   <h3 className="mt-4 text-base font-bold text-ink-900">{area.title}</h3>
-                  <p
-                    className={`mt-2 text-xs font-semibold uppercase tracking-[0.1em] ${
-                      isCore ? 'text-accent-700' : 'text-muted'
-                    }`}
-                  >
-                    {area.status}
-                  </p>
+                  {area.status ? (
+                    <p
+                      className={`mt-2 text-xs font-semibold uppercase tracking-[0.1em] ${
+                        isCore ? 'text-accent-700' : 'text-muted'
+                      }`}
+                    >
+                      {area.status}
+                    </p>
+                  ) : null}
                 </div>
               </li>
             );
           })}
         </ul>
-
-        <p className="mx-auto mt-10 max-w-2xl rounded-lg border border-border bg-white px-5 py-4 text-center text-sm leading-relaxed text-muted">
-          {cities.vision.note}
-        </p>
 
         <div className="mt-12 flex justify-center">
           <Button href={routes.parkingOwners} size="lg" variant="outline" withArrow>

@@ -1,5 +1,4 @@
 import { CarIcon, CheckIcon } from '@/components/icons';
-import { DemoBadge } from '@/components/ui/Badge';
 
 const BAYS = [
   { number: 12, status: 'occupied' },
@@ -50,7 +49,6 @@ export default function ParkingFloorPlan({ className = '' }) {
             Floor 2
           </p>
         </div>
-        <DemoBadge />
       </div>
 
       <div className="bg-blueprint px-5 py-7 sm:px-7 sm:py-9">
