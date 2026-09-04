@@ -4,6 +4,7 @@ import { site } from '@/config/site';
 import { seo } from '@/config/seo';
 import { theme } from '@/config/theme';
 import JsonLd from '@/components/seo/JsonLd';
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
 import { organizationSchema, websiteSchema } from '@/lib/structured-data';
 
 const inter = Inter({
@@ -72,6 +73,7 @@ export default function RootLayout({ children }) {
       <body className="bg-background font-sans text-base text-text antialiased">
         <JsonLd schemas={[organizationSchema(), websiteSchema()]} />
         {children}
+        <GoogleAnalytics />
       </body>
     </html>
   );
