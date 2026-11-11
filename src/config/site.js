@@ -17,7 +17,7 @@ export const site = {
   description:
     'Spotly is a smart parking platform that lets drivers reserve parking before they arrive, automatically assigns an available parking bay, and connects parking infrastructure to a centralised cloud platform.',
   /* Update this to the production domain before launch. */
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://spotly.app',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://spotly.ae',
   locale: DEFAULT_LOCALE,
   localeTag: 'en_US',
   themeColor: '#EF5239',

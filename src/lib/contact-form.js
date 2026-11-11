@@ -1,12 +1,11 @@
 /**
  * Contact form validation + submission transport.
  *
- * There is no Spotly backend wired up yet, so submission is deliberately a
- * single seam: set NEXT_PUBLIC_CONTACT_ENDPOINT to a URL that accepts a JSON
- * POST and the form starts delivering messages with no other changes.
+ * Submissions always go to /api/contact so honeypot, timing and rate-limit
+ * checks run on the server. Accepted messages are emailed through Resend.
  */
 
-export const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || '';
+export const HONEYPOT_FIELD = 'companyWebsite';
 
 export const initialValues = {
   firstName: '',
@@ -67,27 +66,23 @@ export function validateForm(values, options) {
 }
 
 /**
- * @returns {Promise<{ delivered: boolean }>}
- * @throws  {Error} when a configured endpoint rejects the submission
+ * @returns {Promise<{ ok: boolean, delivered?: boolean }>}
+ * @throws  {Error} when the server rejects the submission
  */
 export async function submitContactForm(values) {
-  if (!CONTACT_ENDPOINT) {
-    return { delivered: false };
-  }
-
-  const response = await fetch(CONTACT_ENDPOINT, {
+  const response = await fetch('/api/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      ...values,
-      submittedAt: new Date().toISOString(),
-      source: 'spotly-website-contact-form',
-    }),
+    body: JSON.stringify(values),
   });
+
+  if (response.status === 429) {
+    throw new Error('rate-limited');
+  }
 
   if (!response.ok) {
     throw new Error(`Contact form submission failed with status ${response.status}`);
   }
 
-  return { delivered: true };
+  return response.json();
 }
