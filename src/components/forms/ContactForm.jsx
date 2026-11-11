@@ -6,6 +6,7 @@ import { AlertIcon, CheckCircleIcon } from '@/components/icons';
 import { countries } from '@/config/countries';
 import { contact as contactContent } from '@/config/content/contact';
 import {
+  HONEYPOT_FIELD,
   MESSAGE_MAX_LENGTH,
   initialValues,
   submitContactForm,
@@ -100,11 +101,14 @@ const inputClasses = (invalid) =>
  */
 export default function ContactForm({ defaultInterest = '', idPrefix = 'contact' }) {
   const summaryRef = useRef(null);
+  const startedAt = useRef(Date.now());
 
   const [values, setValues] = useState({ ...initialValues, interest: defaultInterest });
+  const [honeypot, setHoneypot] = useState('');
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const [errorDetail, setErrorDetail] = useState('');
 
   const fieldId = (name) => `${idPrefix}-${name}`;
   const interests = contactContent.interests;
@@ -142,15 +146,23 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
     }
 
     setStatus('submitting');
+    setErrorDetail('');
     console.log('Contact form submission', { ...values });
 
     try {
-      await submitContactForm(values);
+      await submitContactForm({
+        ...values,
+        [HONEYPOT_FIELD]: honeypot,
+        startedAt: startedAt.current,
+      });
       setStatus('success');
       setValues({ ...initialValues, interest: defaultInterest });
+      setHoneypot('');
       setTouched({});
-    } catch {
+      startedAt.current = Date.now();
+    } catch (error) {
       setStatus('error');
+      setErrorDetail(error?.message === 'rate-limited' ? 'rate-limited' : '');
       window.requestAnimationFrame(() => summaryRef.current?.focus());
     }
   };
@@ -179,6 +191,9 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
           onClick={() => {
             setStatus('idle');
             setErrors({});
+            setErrorDetail('');
+            setHoneypot('');
+            startedAt.current = Date.now();
           }}
         >
           Send another message
@@ -192,7 +207,7 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby="contact-form-heading"
-      className="rounded-xl border border-border bg-white p-6 shadow-sm sm:p-8"
+      className="relative rounded-xl border border-border bg-white p-6 shadow-sm sm:p-8"
     >
       <h2 id="contact-form-heading" className="text-2xl font-bold text-ink-900">
         Send us a message
@@ -200,6 +215,19 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
       <p className="mt-2.5 max-w-prose text-[0.975rem] leading-relaxed text-muted">
         {contactContent.responseNote}
       </p>
+
+      <div className="absolute -left-[10000px] h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor={`${idPrefix}-${HONEYPOT_FIELD}`}>Company website</label>
+        <input
+          id={`${idPrefix}-${HONEYPOT_FIELD}`}
+          name={HONEYPOT_FIELD}
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(event) => setHoneypot(event.target.value)}
+        />
+      </div>
 
       {showSummary ? (
         <div
@@ -216,7 +244,9 @@ export default function ContactForm({ defaultInterest = '', idPrefix = 'contact'
           </p>
           {status === 'error' ? (
             <p className="mt-1.5 text-sm text-ink-700">
-              Something went wrong while sending your enquiry. Please try again in a moment.
+              {errorDetail === 'rate-limited'
+                ? 'Too many messages were sent from this network. Please wait a few minutes and try again.'
+                : 'Something went wrong while sending your enquiry. Please try again in a moment.'}
             </p>
           ) : (
             <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm text-ink-700">

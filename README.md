@@ -32,7 +32,9 @@ Copy `.env.example` to `.env.local` and set the values for your environment.
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Public origin. Drives canonical URLs, Open Graph metadata, `sitemap.xml` and `robots.txt`. |
-| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional. URL that accepts a JSON `POST` from the contact form. While it is unset the form validates in the browser but transmits nothing, and the UI says so. |
+| `RESEND_API_KEY` | Server-only Resend API key. Contact enquiries are emailed through Resend. |
+| `RESEND_FROM_EMAIL` | Verified sender, for example `Spotly <inquiries@spotly.ae>`. |
+| `CONTACT_TO_EMAIL` | Inbox that receives enquiries. Defaults to the address in `src/config/site.js`. |
 
 ## Pages
 
